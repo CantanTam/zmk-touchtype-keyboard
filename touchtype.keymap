@@ -1,0 +1,101 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+ /*
+写小说常用符号与zmk键值对应表：
+&kp COLON → ： |  &kp LT → 《  |  &kp GT → 》 |  
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include "touchtype.dtsi"
+
+#define DEF_LAYER 0
+#define FN_LAYER 1
+#define VIM_LAYER 2
+#define WRT_LAYER 3 
+
+/ {
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // 排在第一位的，就是 layer 0，跟名字没有任何关系，后面如此类推
+        default_layer {
+            bindings = <
+    /*          // COL_1        // COL_2        // COL_3        // COL_4        // COL_5        // COL_6        // COL_7        // COL_8       // COL_9  
+                //——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//—————————————//————————————— */  
+    /*ROW_1*/   &kp GRAVE       &kp N1          &kp N2          &kp N3          &kp N4          &kp N5          &kp N6          &kp N7         &kp N8
+    /*ROW_2*/   &kp TAB         &kp Q           &kp W           &kp E           &kp R           &kp T           &kp Y           &kp U          &kp I
+    /*ROW_3*/   &kp CAPS        &kp A           &kp S           &kp D           &kp F           &kp G           &kp H           &kp J          &kp K
+    /*ROW_4*/   &kp LSHIFT      &kp Z           &kp X           &kp C           &kp V           &kp B           &kp N           &kp M          &kp COMMA
+    /*ROW_5*/   &kp LCTRL       &kp LMETA       &kp LALT        &kp SPACE       &kp ENTER       &kp BACKSPACE   &kp RALT        &mo FN_LAYER   &kp K_APP
+    /*ROW_6*/   &kp N9          &kp N0          &kp MINUS       &kp EQUAL       &kp HOME        &kp F1          &kp F6          &kp ESC        &kp F11
+    /*ROW_7*/   &kp O           &kp P           &kp LBKT        &kp RBKT        &kp PAGE_UP     &kp F2          &kp F7          &kp BACKSPACE  &kp F12
+    /*ROW_8*/   &kp L           &kp SEMICOLON   &kp APOSTROPHE  &kp BACKSLASH   &kp PAGE_DOWN   &kp F3          &kp F8          &kp INSERT     &none
+    /*ROW_9*/   &kp DOT         &kp SLASH       &kp RSHIFT      &kp ENTER       &kp END         &kp F4          &kp F9          &kp DELETE     &none
+    /*ROW_10*/  &kp RCTRL       &kp LEFT_ARROW  &kp UP_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW &kp F5          &kp F10         &none          &none
+            >;
+        };
+
+        // layer 1 , fn 功能键层
+        func_layer {
+            bindings = <
+    /*          // COL_1        // COL_2        // COL_3        // COL_4        // COL_5        // COL_6        // COL_7        // COL_8       // COL_9  
+                //——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//—————————————//————————————— */  
+    /*ROW_1*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &trans
+    /*ROW_2*/   &trans          &trans          &trans          &trans          &comment_r      &trans          &trans          &trans         &trans
+    /*ROW_3*/   &trans          &trans          &comment_s      &trans          &trans          &trans          &comment_h      &trans         &trans
+    /*ROW_4*/   &trans          &trans          &comment_x      &comment_c      &trans          &trans          &trans          &trans         &trans
+    /*ROW_5*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &mo FN_LAYER   &trans
+    /*ROW_6*/   &trans          &trans          &trans          &trans          &th_todef 0 0   &kp C_MUTE      &trans          &trans         &trans
+    /*ROW_7*/   &trans          &comment_p      &trans          &trans          &th_tovim 0 0   &kp C_VOL_DN    &trans          &trans         &trans
+    /*ROW_8*/   &comment_l      &trans          &trans          &trans          &th_towrt 0 0   &kp C_VOL_UP    &trans          &trans         &none
+    /*ROW_9*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &none
+    /*ROW_10*/  &trans          &th_btone 0 0   &th_clear 0 0   &th_bttwo 0 0   &th_btthree 0 0 &trans          &trans          &none          &none
+            >;
+        };
+
+        // layer 2 , vim 编程模式功能键层
+        coding_layer {
+            bindings = <
+    /*          // COL_1        // COL_2        // COL_3        // COL_4        // COL_5        // COL_6        // COL_7        // COL_8       // COL_9  
+                //——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//—————————————//————————————— */  
+    /*ROW_1*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &trans
+    /*ROW_2*/   &trans          &th_cr2c2 0 0   &th_cr2c3 0 0   &th_cr2c4 0 0   &th_cr2c5 0 0   &th_cr2c6 0 0   &th_cr2c7 0 0   &th_cr2c8 0 0  &th_cr2c9 0 0
+    /*ROW_3*/   &trans          &th_cr3c2 0 0   &th_cr3c3 0 0   &th_cr3c4 0 0   &th_cr3c5 0 0   &th_cr3c6 0 0   &th_cr3c7 0 0   &th_cr3c8 0 0  &th_cr3c9 0 0
+    /*ROW_4*/   &trans          &trans          &th_cr4c3 0 0   &th_cr4c4 0 0   &th_cr4c5 0 0   &th_cr4c6 0 0   &th_cr4c7 0 0   &th_cr4c8 0 0  &th_cr4c9 0 0
+    /*ROW_5*/   &trans          &trans          &trans          &th_cr5c4 0 0   &th_cr5c5 0 0   &kp BACKSPACE   &trans          &mo FN_LAYER   &trans
+    /*ROW_6*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &trans
+    /*ROW_7*/   &th_cr7c1 0 0   &th_cr7c2 0 0   &trans          &trans          &trans          &trans          &trans          &trans         &trans
+    /*ROW_8*/   &th_cr8c1 0 0   &th_cr8c2 0 0   &trans          &trans          &trans          &trans          &trans          &trans         &none
+    /*ROW_9*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &none
+    /*ROW_10*/  &trans          &trans          &trans          &trans          &trans          &trans          &trans          &none          &none
+            >;
+        };
+
+        // layer 3, 中文小说写作模式
+        writing_layer {
+            bindings = <
+    /*          // COL_1        // COL_2        // COL_3        // COL_4        // COL_5        // COL_6        // COL_7        // COL_8       // COL_9  
+                //——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//—————————————//————————————— */  
+    /*ROW_1*/   &trans          &trans          &trans          &th_guill 0 0   &th_col_par 0 0 &th_quote 0 0   &th_cande 0 0   &th_dands 0 0  &th_qandc 0 0
+    /*ROW_2*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &trans
+    /*ROW_3*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &trans
+    /*ROW_4*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &th_candq 0 0
+    /*ROW_5*/   &trans          &trans          &trans          &th_space 0 0   &th_enter 0 0   &trans          &trans          &mo FN_LAYER   &trans
+    /*ROW_6*/   &th_eandu 0 0   &th_tandi 0 0   &trans          &trans          &trans          &kp N1          &kp N6          &trans         &none
+    /*ROW_7*/   &trans          &trans          &trans          &trans          &trans          &kp N2          &kp N7          &trans         &none
+    /*ROW_8*/   &trans          &th_cquoc 0 0   &trans          &trans          &trans          &kp N3          &kp N8          &trans         &none
+    /*ROW_9*/   &th_dande 0 0   &trans          &trans          &trans          &trans          &kp N4          &kp N9          &trans         &none
+    /*ROW_10*/  &trans          &trans          &trans          &trans          &trans          &kp N5          &kp N0          &none          &none
+            >;
+        };
+
+
+    };
+};

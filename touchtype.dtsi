@@ -1,0 +1,1307 @@
+// 自定义符号快捷输入
+
+#define DELAY_TIME <5> // 定义宏延迟时间为 10 毫秒
+#define HOLD_TIME <500> // 定义短按、长按时间阀值
+
+
+/ { 
+    // 切换到不同编辑模式层
+    switch_layer {
+        // 如果有自定义行为，就需要把 &none 更换成真实的 behavior，例如 <&to 0 &kp A>，下面其实类似
+        write_todefault: to_default_layer {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&to 0 &none>;
+        }; 
+
+         // 短按空按键 ，长按切换到默认 layer 0
+        th_todef: switch_to_default_layer {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&write_todefault>,<&none>;
+        }; 
+
+        write_tovim: to_vim_layer {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&to 2 &none>;
+        }; 
+
+         // 短按空按键 ，长按切换到 vim 编辑层 layer 1
+        th_tovim: switch_to_vim_layer {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&write_tovim>,<&none>;
+        }; 
+
+        write_towrt: to_write_layer {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&to 3 &none>;
+        }; 
+
+         // 短按空按键 ，长按切换到写作模式层 layer 2
+        th_towrt: switch_to_write_layer {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&write_towrt>,<&none>;
+        }; 
+
+    };
+
+    // 切换不同的连接主机
+    switch_device {
+        // 主机清除当前槽位的匹配信息之后，需要在 zmk 的相同槽位清除匹配信息，它不会影响其它槽位的匹配信息
+        // 如果有自定义行为，就需要把 &none 更换成真实的 behavior，下面其实类似
+        device_clear: clear_current_bluetooth {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&bt BT_CLR &none>;
+        };
+
+        // 切换到槽位 0 的蓝牙连接
+        device_one: to_bluetooth_one_connect {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            // 这里先断开所有蓝牙连接，再选择相应的蓝牙槽，下面操作一样   
+            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 0 &none>;
+        };
+
+        // 切换到槽位 1 的蓝牙连接
+        device_two: to_bluetooth_two_connect {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 1 &none>;
+        };
+
+        //切换到槽位 2 的蓝牙连接 
+        device_three: to_bluetooth_three_connect {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 2 &none>;
+        };   
+         // 短按空按键 ，长按清除当前槽位的蓝牙连接匹配
+        th_clear: clear_bluetooth_bond {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&device_clear>,<&none>;
+        };   
+
+         // 短按空按键 ，长按切换到蓝牙连接槽位 0
+        th_btone: to_bluetooth_bond_one {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&device_one>,<&none>;
+        };  
+
+         // 短按空按键 ，长按切换到蓝牙连接槽位 1
+        th_bttwo: to_bluetooth_bond_two {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&device_two>,<&none>;
+        };       
+
+         // 短按空按键 ，长按切换到蓝牙连接槽位 0
+        th_btthree: to_bluetooth_bond_three {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&device_three>,<&none>;
+        };    
+    };
+
+    // 快速输入中文符号
+    quick_chinese {
+        // ------------------- 一些共用按键 ------------------
+        // 输入 ： 冒号
+        write_colon: colon {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp COLON>;
+        };
+
+        // 输入 ， 逗号
+        write_comma: comma {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp COMMA>;
+        };
+
+        // 输入 。 句号
+        write_dot: dot {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp DOT>;
+        };
+
+        // 输入 ？ 问号
+        write_question: question {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp QUESTION>;
+        };
+
+        // 输入 ！ 感叹号
+        write_exclamation: exclamation {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp EXCLAMATION>;
+        };   
+
+        // 输入 ； 分号
+        write_semicolon: semicolon {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp SEMICOLON>;
+        };
+
+        // 输入 …… 分号
+        write_caret: caret {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp CARET>;
+        };
+
+        // 输入 —— 分号
+        write_underscore: underscore {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp UNDERSCORE>;
+        };
+
+        // ----------------- R1C4 默认键位值 -----------------
+        // 输入左、右双书名号、左方向键
+        write_dguill: both_double_guillemet {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmkssmh → 《》 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp S &kp S &kp M &kp H &kp SPACE &kp LEFT>;
+        };
+
+        // 输入左、右单书名呈、左方向键
+        write_sguill: both_single_guillemet {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmkysyh → 《》 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp D &kp S &kp M &kp H &kp SPACE &kp LEFT>;
+        };
+
+        // 短按输出 《》，长按输出 〈〉
+        th_guill: double_single_guill {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_sguill>, <&write_dguill> ;
+        };
+
+
+        // ----------------- R1C5 默认键位值 -----------------
+        // 输入左、右括号、左方向键
+        write_parent: both_parenthesis {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // linux不需要额外设置，windows不确定需不需要额外设置
+            bindings = <&kp LPAR &kp RPAR &kp LEFT>;
+        };
+
+        // 短按输出 ：，长按输出 （）
+        th_col_par: colon_parent {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_parent>, <&write_colon>;
+        };   
+
+        
+        // ----------------- R1C6 默认键位值 -----------------   
+        // 输入左双引号、右双引号、左方向键
+        write_dquote: both_double_quote {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmksyh → “” 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp S &kp Y &kp H &kp SPACE &kp LEFT>;
+        };
+
+        // 输入左单引号、右单引号、左方向键
+        write_squote: both_single_quote {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmkdyh → ‘’ 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp D &kp Y &kp H &kp SPACE &kp LEFT>;
+        };
+
+        // 短按输出 “”，长按输出 ‘’
+        th_quote: double_single_quote {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_squote>, <&write_dquote> ;
+        };
+
+
+        // ----------------- R1C7 默认键位值 -----------------
+        // 输入 、 顿号
+        write_enumeration: enumeration {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmkzwdh → 、 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp Z &kp W &kp D &kp H &kp SPACE>;
+        };
+
+        // 短按输出 ，，长按输出 、
+        th_cande: comma_and_enumeration {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_enumeration>, <&write_comma>;
+        };  
+
+
+        // ----------------- R1C8 默认键位值 -----------------
+        // 短按输出 。，长按输出 ；
+        th_dands: dot_and_semicolon {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_semicolon>, <&write_dot>;
+        };                   
+
+
+        // ----------------- R1C9 默认键位值 -----------------
+        // 短按输出 ？，长按输出 ……
+        th_qandc: question_and_caret {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_caret>, <&write_question>;
+        };
+
+
+        // ----------------- R6C1 默认键位值 -----------------   
+        // 短按输出 ！，长按输出 ——
+        th_eandu: exclamation_and_underscore {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_underscore>, <&write_exclamation>;
+        };
+
+
+        // ----------------- R6C1 默认键位值 -----------------   
+        // 输入 ~ 波浪号
+        write_tilde: tilde {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmkblh → ~ 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp B &kp L &kp H &kp SPACE>;
+        };
+
+        // 输入 • 人名分隔号
+        write_interpunct: interpunct {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmkrmfgh → • 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp R &kp M &kp F &kp H &kp SPACE>;
+        };
+
+        // 短按输出 ~，长按输出 •
+        th_tandi: tilde_and_interpunc {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_interpunct>, <&write_tilde>;
+        };  
+
+
+        // ----------------- R8C2 默认键位值 -----------------   
+        // 输入 ：“” 冒号双引号
+        write_colon_quote: colon_quote {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            wait-ms = DELAY_TIME;
+            tap-ms = DELAY_TIME;
+            // 需要在输入法当中添加 zmkmhsyh → ：“” 这样的定义才能使用，同时适用于 windows 和 linux 输入法
+            bindings = <&kp ESC &kp Z &kp M &kp K &kp M &kp H &kp S &kp Y &kp H &kp SPACE &kp LEFT>;
+        };
+
+        // 短按输出 :""，长按输出 :
+        th_cquoc: colon_quote_and_colon {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_colon>, <&write_colon_quote>;
+        };                
+
+
+        // ----------------- R4C9 默认键位值 -----------------   
+        // 短按输出 ,，长按输出 ?
+        th_candq: colon_and_question {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_question>, <&write_comma>;
+        }; 
+
+
+        // ----------------- R9C1 默认键位值 -----------------   
+        // 短按输出 。，长按输出 ！
+        th_dande: dot_and_exclamation {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings =<&write_exclamation>, <&write_dot>;
+        };
+
+
+        // ----------------- R5C4 默认键位值 -----------------   
+        // 输入 Space 空格键
+        write_space: tab_hold_space {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp SPACE>;
+        };
+
+        // 输入 ← 左方向键
+        write_left: tab_hold_left {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LEFT_ARROW>;
+        };
+
+        // 短按输出 space ，长按输出 ←
+        th_space: space_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&write_left>,<&write_space>;
+        };  
+
+
+        // ----------------- R5C5 默认键位值 -----------------   
+        // 输出 Enter 确定键
+        write_enter: tab_hold_enter {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp ENTER>;
+        };
+
+        // 输出 → 右方向键
+        write_right: tab_hold_right {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp RIGHT_ARROW>;
+        };
+
+        // 短按输出 enter ，长按输出 →
+        th_enter: enter_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            quick-tap-ms = <200>;         // 快速连点也按 tap 处理（可选）
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&write_right>,<&write_enter>;
+        };
+
+    };
+
+    // 标准 104 键英文默认字符列表，这里主要应用于自定义 coding layer 快速编程层
+    english_symbol {
+        // Q 位置快捷键：长按 $ 短按 Q
+        // 输出 $
+        code_dollar: code_dollar {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp DOLLAR>;
+        };
+
+        // 输出 Q
+        code_q: code_q {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp Q>;
+        };
+
+         // 长按 $ 短按 Q
+        th_cr2c2: q_or_dollar {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_dollar>,<&code_q>;
+        }; 
+
+        // W 位置快捷键：长按 ~ 短按 W
+        // 输出 ~
+        code_tilde: code_tilde {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp TILDE>;
+        };
+
+        // 输出 W
+        code_w: code_w {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp W>;
+        };
+
+        // 长按 ~ 短按 W
+        th_cr2c3: w_or_tilde {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_tilde>,<&code_w>;
+        }; 
+
+        // E 位置快捷键：长按 = 短按 E
+        // 输出 =
+        code_equal: code_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp EQUAL>;
+        };       
+
+        // 输出 E
+        code_e: code_e {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp E>;
+        };       
+
+        // 长按 = 短按 E
+        th_cr2c4: e_or_equal {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_equal>,<&code_e>;
+        }; 
+
+        // R 位置快捷键：长按 - 短按 R
+        // 输出 -
+        code_minus: code_minus {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp MINUS>;
+        };
+
+        // 输出 R
+        code_r: code_r {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp R>;
+        };
+
+        // 长按 - 短按 R
+        th_cr2c5: r_or_minus {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_minus>,<&code_r>;
+        }; 
+
+        // T 位置快捷键：长按 ` 短按 T
+        // 输出 `
+        code_grave: code_grave {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp GRAVE>;
+        };
+
+        // 输出 T
+        code_t: code_t {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp T>;
+        };
+
+        // 长按 ` 短按 T
+        th_cr2c6: t_or_grave {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_grave>,<&code_t>;
+        }; 
+
+        // Y 位置快捷键：长按 ? 短按 Y
+        // 输出 ?
+        code_question: code_question {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp QUESTION>;
+        };
+
+        // 输出 Y
+        code_y: code_y {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp Y>;
+        };        
+
+        // 长按 ? 短按 Y
+        th_cr2c7: y_or_question {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_question>,<&code_y>;
+        }; 
+
+        // U 位置快捷键：长按 _ 短按 U
+        // 输出 _
+        code_underscore: code_underscore {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp UNDERSCORE>;
+        };
+
+        // 输出 U
+        code_u: code_u {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp U>;
+        };        
+
+        // 长按 _ 短按 U
+        th_cr2c8: u_or_underscore {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_underscore>,<&code_u>;
+        }; 
+
+        // I 位置快捷键：长按 @ 短按 I
+        // 输出 @
+        code_at: code_at {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp AT>;
+        };
+
+        // 输出 I
+        code_i: code_i {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp I>;
+        };
+
+        // 长按 @ 短按 I
+        th_cr2c9: i_or_at {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_at>,<&code_i>;
+        };
+
+        // O 位置快捷键：长按 | 短按 O
+        // 输出 |
+        code_pipe: code_pipe {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp PIPE>;
+        };
+
+        // 输出 O
+        code_o: code_o {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp O>;
+        };
+
+        // 长按 | 短按 O
+        th_cr7c1: o_or_pipe {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_pipe>,<&code_o>;
+        };
+
+        // P 位置快捷键：长按 % 短按 P
+        // 输出 %
+        code_percent: code_percent {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp PERCENT>;
+        };
+
+        // 输出 P
+        code_p: code_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp P>;
+        };
+
+        // 长按 % 短按 P
+        th_cr7c2: p_or_percent {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_percent>,<&code_p>;
+        };
+
+        // A 位置快捷键：长按 & 短按 A
+        // 输出 &
+        code_ampersand: code_ampersand {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp AMPERSAND>;
+        };
+
+        // 输出 A
+        code_a: code_a {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp A>;
+        };
+
+        // 长按 & 短按 A
+        th_cr3c2: a_or_ampersand {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_ampersand>,<&code_a>;
+        };
+
+        // S 位置快捷键：长按 "" 短按 S
+        // 输出 ""
+        code_double_quotes: code_double_quotes {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp DOUBLE_QUOTES &kp DOUBLE_QUOTES &kp LEFT>;
+        };
+
+        // 输出 S
+        code_s: code_s {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp S>;
+        };
+
+        // 长按 "" 短按 S
+        th_cr3c3: s_or_double_quote {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_double_quotes>,<&code_s>;
+        };
+
+        // D 位置快捷键：长按 / 短按 D
+        // 输出 /
+        code_slash: code_slash {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp SLASH>;
+        };
+
+        // 输出 D
+        code_d: code_d {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp D>;
+        };
+
+        // 长按 / 短按 D
+        th_cr3c4: d_or_slash {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_slash>,<&code_d>;
+        };
+
+        // F 位置快捷键：长按 [] 短按 F
+        // 输出 []
+        code_brackets: code_brackets {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LEFT_BRACKET &kp RIGHT_BRACKET &kp LEFT>;
+        };
+
+        // 输出 F
+        code_f: code_f {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp F>;
+        };
+
+        // 长按 [] 短按 F
+        th_cr3c5: f_or_brackets {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_brackets>,<&code_f>;
+        };
+
+        // G 位置快捷键：长按 > 短按 G
+        // 输出 >
+        code_greater_than: code_greater_than {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp GREATER_THAN>;
+        };
+
+        // 输出 G
+        code_g: code_g {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp G>;
+        };
+
+        // 长按 > 短按 G
+        th_cr3c6: g_or_greater_than {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_greater_than>,<&code_g>;
+        };
+
+        // H 位置快捷键：长按 {} 短按 H
+        // 输出 {}
+        code_braces: code_braces {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LEFT_BRACE &kp RIGHT_BRACE &kp LEFT>;
+        };
+
+        // 输出 H
+        code_h: code_h {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp H>;
+        };
+
+        // 长按 {} 短按 H
+        th_cr3c7: h_or_braces {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_braces>,<&code_h>;
+        };
+
+        // J 位置快捷键：长按 + 短按 J
+        // 输出 +
+        code_plus: code_plus {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp PLUS>;
+        };
+
+        // 输出 j
+        code_j: code_j {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp J>;
+        };
+
+        // 长按 + 短按 J
+        th_cr3c8: j_or_plus {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_plus>,<&code_j>;
+        };
+
+        // K 位置快捷键：长按 () 短按 K
+        // 输出 ()
+        code_parenthesis: code_parenthesis {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LPAR &kp RPAR &kp LEFT>;
+        };
+
+        // 输出 K
+        code_k: code_k {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp K>;
+        };
+
+        // 长按 () 短按 K
+        th_cr3c9: k_or_parenthesis {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_parenthesis>,<&code_k>;
+        };
+
+        // L 位置快捷键：长按 < 短按 L
+        // 输出 <
+        code_less_than: code_less_than {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LESS_THAN>;
+        };
+
+        // 输出 L
+        code_l: code_l {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp L>;
+        };
+
+        // 长按 < 短按 L
+        th_cr8c1: l_or_less_than {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_less_than>,<&code_l>;
+        };
+
+        // ; 位置快捷键：长按 : 短按 ;
+        // 输出 :
+        code_colon: code_colon {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp COLON>;
+        };
+
+        // 输出 ;
+        code_semicolon: code_semicolon {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp SEMICOLON>;
+        };
+
+        // 长按 : 短按 ;
+        th_cr8c2: colon_or_semicolon {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_colon>,<&code_semicolon>;
+        };
+
+        // X 位置快捷键：长按 # 短按 X
+        // 输出 #
+        code_hash: code_hash {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp HASH>;
+        };
+
+        // 输出 X
+        code_x: code_x {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp X>;
+        };
+
+        // 长按 # 短按 X
+        th_cr4c3: x_or_hash {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_hash>,<&code_x>;
+        };
+
+        // C 位置快捷键：长按 '' 短按 C
+        // 输出 ''
+        code_single_quotes: code_single_quotes {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp SINGLE_QUOTE &kp SINGLE_QUOTE &kp LEFT>;
+        };
+
+        // 输出 C
+        code_c: code_c {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp C>;
+        };
+
+        // 长按 '' 短按 C
+        th_cr4c4: c_or_single_quotes {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_single_quotes>,<&code_c>;
+        };
+
+        // V 位置快捷键：长按 ^ 短按 V
+        // 输出 ^
+        code_caret: code_caret {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp CARET>;
+        };
+
+        // 输出 V
+        code_v: code_v {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp V>;
+        };
+
+        // 长按 ^ 短按 V
+        th_cr4c5: v_or_caret {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_caret>,<&code_v>;
+        };
+
+        // B 位置快捷键：长按 (反斜杠) 短按 B
+        // 输出 (反斜杠)
+        code_backslash: code_backslash {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp BACKSLASH>;
+        };
+
+        // 输出 B
+        code_b: code_b {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp B>;
+        };
+
+        // 长按 (反斜杠) 短按 B
+        th_cr4c6: b_or_backslash {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_backslash>,<&code_b>;
+        };
+
+        // N 位置快捷键：长按 ! 短按 N
+        // 输出 !
+        code_exclamation: code_exclamation {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp EXCLAMATION>;
+        };
+
+        // 输出 N
+        code_n: code_n {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp N>;
+        };
+
+        // 长按 ! 短按 N
+        th_cr4c7: n_or_exclamation {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_exclamation>,<&code_n>;
+        };
+
+        // M 位置快捷键：长按 * 短按 M
+        // 输出 *
+        code_asterisk: code_asterisk {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp ASTERISK>;
+        };
+
+        // 输出 M
+        code_m: code_m {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp M>;
+        };
+
+        // 长按 * 短按 M
+        th_cr4c8: m_or_asterisk {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_asterisk>,<&code_m>;
+        };
+
+        // , 位置快捷键：长按 <> 短按 ,
+        // 输出 <>
+        code_thans: code_thans {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LESS_THAN &kp GREATER_THAN &kp LEFT>;
+        };
+
+        // 输出 ,
+        code_comma: code_comma {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp COMMA>;
+        };
+
+        // 长按 <> 短按 ,
+        th_cr4c9: comma_or_thans {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_thans>,<&code_comma>;
+        };
+
+        // ★Space 位置快捷键：长按 ← 短按 Space
+        // 输出 ←
+        code_left: code_left {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LEFT_ARROW>;
+        };
+
+        // 输出 SPACE
+        code_space: code_space {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp SPACE>;
+        };
+
+        // 长按 ← 短按 SPACE
+        th_cr5c4: space_or_left {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_left>,<&code_space>;
+        };
+        
+        // ★Enter 位置快捷键：长按 → 短按 ESC
+        // 输出 →
+        code_right: code_right {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp RIGHT_ARROW>;
+        };
+
+        // 输出 ESC
+        code_esc: code_esc {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp ESC>;
+        };
+
+        // 长按 → 短按 ESC
+        th_cr5c5: esc_or_right {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = HOLD_TIME;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&code_right>,<&code_esc>;
+        };
+
+        // 长按 Fn ，按 C 生成 C/C++/Java/JS/Go/Rust/Swift/Kotlin/C#/CSS/SQL 长注释
+        comment_c: comment_c {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp SLASH &kp STAR 
+                        &kp ENTER &kp ENTER 
+                        &kp STAR &kp SLASH 
+                        &kp LEFT &kp LEFT &kp LEFT>;
+        };
+
+        // 长按 Fn ，按 C 生成 Python 长注释
+        comment_p: comment_p {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp DOUBLE_QUOTES &kp DOUBLE_QUOTES &kp DOUBLE_QUOTES 
+                        &kp ENTER &kp ENTER 
+                        &kp DOUBLE_QUOTES &kp DOUBLE_QUOTES &kp DOUBLE_QUOTES 
+                        &kp LEFT &kp LEFT &kp LEFT &kp LEFT>;
+        };
+
+        // 长按 Fn ，按 S 生成 Shell 长注释
+        comment_s: comment_s {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp COLON &kp SPACE &kp LESS_THAN &kp LESS_THAN &kp SPACE &kp E &kp O &kp F 
+                        &kp ENTER &kp ENTER 
+                        &kp E &kp O &kp F 
+                        &kp LEFT &kp LEFT &kp LEFT &kp LEFT>;
+        };
+
+        // 长按 Fn ，按 X 生成 XML 长注释
+        comment_x: comment_x {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LESS_THAN &kp EXCLAMATION &kp MINUS &kp MINUS 
+                        &kp ENTER &kp ENTER 
+                        &kp MINUS &kp MINUS &kp GREATER_THAN 
+                        &kp LEFT &kp LEFT &kp LEFT &kp LEFT>;
+        };
+
+        // 长按 Fn ，按 L 生成 Lua 长注释
+        comment_l: comment_l {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp MINUS &kp MINUS &kp LEFT_BRACKET &kp LEFT_BRACKET 
+                        &kp ENTER &kp ENTER 
+                        &kp RIGHT_BRACKET &kp RIGHT_BRACKET 
+                        &kp LEFT &kp LEFT &kp LEFT>;
+        };
+
+        // 长按 Fn ，按 R 生成 Ruby 长注释
+        comment_r: comment_r {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp EQUAL &kp B &kp E &kp G &kp I &kp N 
+                        &kp ENTER &kp ENTER 
+                        &kp EQUAL &kp E &kp N &kp D 
+                        &kp LEFT &kp LEFT &kp LEFT &kp LEFT &kp LEFT>;
+        };
+
+        // 长按 Fn ，按 H 生成 Haskell 长注释
+        comment_h: comment_h {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp LEFT_BRACE &kp MINUS 
+                        &kp ENTER &kp ENTER 
+                        &kp MINUS &kp RIGHT_BRACE 
+                        &kp LEFT &kp LEFT &kp LEFT>;
+        };
+
+
+
+
+
+    };
+
+};

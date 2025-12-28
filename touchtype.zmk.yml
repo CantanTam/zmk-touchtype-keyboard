@@ -1,0 +1,10 @@
+file_format: "1"
+id: touchtype
+name: touchtype Keyboard
+type: board
+arch: arm
+features:
+  - keys
+outputs:
+  - ble
+url: https://github.com/winnedatsch/touchtype-keyboard

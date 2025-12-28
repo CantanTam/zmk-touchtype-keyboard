@@ -1,0 +1,8 @@
+# touchtype board configuration
+
+# Copyright (c) 2020 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+config BOARD_TOUCHTYPE
+	bool "touchtype"
+	depends on SOC_NRF52832_QFAA

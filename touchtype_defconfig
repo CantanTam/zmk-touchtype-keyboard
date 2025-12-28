@@ -1,0 +1,124 @@
+CONFIG_BOARD_TOUCHTYPE=y
+CONFIG_SOC_SERIES_NRF52X=y
+CONFIG_SOC_NRF52832_QFAA=y
+
+# enable GPIO
+CONFIG_GPIO=y
+
+# Enable i2c
+CONFIG_I2C=y
+
+# Enable MPU
+CONFIG_ARM_MPU=y
+
+# 启用 zmk 蓝牙功能，这是核心功能，必须开启
+CONFIG_ZMK_BLE=y
+
+# board板没有 DCDC 电感元件，则需要删除 Kconfig 文件并注释掉以下这行
+# 后期如果修改电路，启用 DCDC 电源，则可以启用这个设置
+#CONFIG_BOARD_ENABLE_DCDC=n
+
+# 硬件设定为外围设备，键盘对于主机是外围设置，这是必选项
+CONFIG_BT_PERIPHERAL=y
+
+# 设备名称
+#CONFIG_BT_DEVICE_NAME="TouchCon"
+CONFIG_ZMK_KEYBOARD_NAME="TypeGit"
+
+# 与主机连接后，及时向主机发送 zmk 的状态信息，可以简单理解为更快显示电池电量
+CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION=n
+
+# 保存配对信息
+CONFIG_BT_SMP=y
+
+# 允许设备请求绑定
+CONFIG_BT_BONDABLE=y
+
+# 启用蓝牙配置存储到 Flash
+CONFIG_BT_SETTINGS=y	
+
+# 最多连接多少个设备，这里其实只能使用 1
+CONFIG_BT_MAX_CONN=1
+
+# 最多保存多少个已配对设备，超过会覆盖最老的。这里使用 ← 、↓ 、→ 作为切换槽位的按键,这里的数量会影响电量功耗
+CONFIG_BT_MAX_PAIRED=3
+
+
+
+
+
+#### 电池电量管理相关 #######
+
+# ADC 驱动
+CONFIG_ADC_NRFX_SAADC=y
+
+# 启用 ADC
+CONFIG_ADC=y
+
+# 启用电池服务 (BLE)
+CONFIG_BT_BAS=y
+CONFIG_ZMK_BATTERY_REPORTING=y
+
+# 设置电量报告间隔为 120 秒 (2 分钟)
+CONFIG_ZMK_BATTERY_REPORT_INTERVAL=120
+
+# 进入深度睡眠模式之后，关闭I2C、SPI、UART等接口用于省电
+# 如果后续的XW12A芯片无法正常工作，可以尝试停用该功能
+CONFIG_PM_DEVICE=y
+
+# 进入空间模式的等待时间阀值，这里是 30 秒。深度睡眠
+CONFIG_ZMK_IDLE_TIMEOUT=30000
+
+# 启用深度睡眠功能
+CONFIG_ZMK_SLEEP=y
+
+# 进入深度睡眠模式的等待时间阀值，这里是 15分钟。注意，睡眠模式唤醒之后，会回到默认 layer 0，
+# 如果你不需要经常切换 layer ，可以直接使用默认值 900000，也就是 15 分钟；
+# 如果经常需要切换 layer ，可以把值调大一点，例如 3600000 ，也就是一小时，唤醒之后再切换 layer
+CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=60000
+
+
+
+
+
+
+# 具体作用我也不知道，但启用它们之后，才能实现 zmk 键盘断电再通电之后直接连接主机
+CONFIG_MPU_ALLOW_FLASH_WRITE=y
+CONFIG_NVS=y
+CONFIG_SETTINGS_NVS=y
+CONFIG_FLASH=y
+CONFIG_FLASH_PAGE_LAYOUT=y
+CONFIG_FLASH_MAP=y
+
+
+
+
+
+
+#### 如果在 window 当中无法正常工作，就需要研究一下以下选项，这是 GPT 给出的 ####
+# --- Enable BLE & bonding ---
+#CONFIG_BT=y
+#CONFIG_SETTINGS=y
+#CONFIG_SETTINGS_DYNAMIC_HANDLERS=y
+
+# --- Improve Windows compatibility ---
+#CONFIG_BT_CTLR_CONN_TIMES=y
+#CONFIG_BT_CTLR_CONN_EVENT_LEN_DEFAULT=10
+#CONFIG_BT_BUF_ACL_RX_COUNT=7
+#CONFIG_BT_BUF_ACL_RX_SIZE=251
+#CONFIG_BT_HCI_ACL_FLOW_CONTROL=y
+
+# --- Linux + Android + macOS optimizations ---
+#CONFIG_BT_L2CAP_TX_MTU=247
+#CONFIG_BT_BUF_ACL_TX_COUNT=7
+#CONFIG_BT_BUF_ACL_TX_SIZE=251
+#CONFIG_BT_ATT_PREPARE_COUNT=5
+#CONFIG_BT_GATT_CLIENT=y
+
+# --- Advertising improvements ---
+#CONFIG_BT_DEVICE_APPEARANCE=961
+#CONFIG_BT_SCAN_WITH_IDENTITY=y
+
+# --- NRF52 stabilizer ---
+#CONFIG_BT_CTLR_SDC_FIX=y
+#CONFIG_BT_LL_SW_SPLIT=y

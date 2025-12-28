@@ -1,0 +1,18 @@
+# touchtype board configuration
+# 不影响蓝牙开关与否
+
+if BOARD_TOUCHTYPE
+
+config BOARD
+	default "touchtype"
+
+config BT_CTLR
+	default BT
+
+config ZMK_KEYBOARD_NAME
+    default "touchModule"
+
+config ZMK_KSCAN_MATRIX_POLLING
+    default yCONFIG_SOC_NRF52832_QFA=y
+
+endif # BOARD_TOUCHTYPE
