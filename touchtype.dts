@@ -4,10 +4,15 @@
  * SPDX-License-Identifier: MIT
  */
 
+
 /dts-v1/;
 #include <nordic/nrf52832_qfaa.dtsi>
 #include <dt-bindings/gpio/gpio.h> // 1. 提供了 GPIO 宏
 #include <dt-bindings/zmk/matrix_transform.h>
+
+
+/* 测试 zmk behavior 用*/ 
+//#include "control_gpio_behavior.dtsi"
 
 / {
     model = "touchtype Keyboard";
@@ -89,7 +94,14 @@
         status = "okay";
     };
 
-    
+    led: led {
+        compatible = "zmk,behavior-led";
+        #binding-cells = <2>; 
+        // 索引 0 对应 GRE (P0.30), 索引 1 对应 RED (P0.31)
+        gpios = <&gpio0 30 GPIO_ACTIVE_LOW>, <&gpio0 31 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
 
 };
 

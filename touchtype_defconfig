@@ -23,7 +23,7 @@ CONFIG_BT_PERIPHERAL=y
 
 # 设备名称
 #CONFIG_BT_DEVICE_NAME="TouchCon"
-CONFIG_ZMK_KEYBOARD_NAME="TypeGit"
+CONFIG_ZMK_KEYBOARD_NAME="TypeExt"
 
 # 与主机连接后，及时向主机发送 zmk 的状态信息，可以简单理解为更快显示电池电量
 CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION=n
