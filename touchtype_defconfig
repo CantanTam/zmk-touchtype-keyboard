@@ -1,7 +1,7 @@
 ###### 以下是用户可以自定义的固件选项 #####
 
 # 键盘默认名称
-CONFIG_ZMK_KEYBOARD_NAME="TypeLayer"
+CONFIG_ZMK_KEYBOARD_NAME="TypeMax"
 
 # 进入空闲模式的等待时间阀值，单位是毫秒，默认是 30000 毫秒，也就是 30 秒
 CONFIG_ZMK_IDLE_TIMEOUT=30000
@@ -21,7 +21,7 @@ CONFIG_BATTERY_LEVEL=5
 # 启用层记录功能。关闭的话每次唤醒之后会回到默认层；启用后可以回到上一次切换的层
 # 需要注意的是，层记录功能会刷写芯片 flash，会影响到芯片寿命
 # 但是只要你不频繁切换层的话，其实这个影响很小，正常使用基本可以保证芯片至少八年寿命，所以建议开启
-CONFIG_RECORD_LAYER=n
+CONFIG_RECORD_LAYER=y
 
 
 
