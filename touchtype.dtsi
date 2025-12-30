@@ -5,20 +5,30 @@
 
 
 / { 
+    // 切换 CAPS_LOCK 有 led 提示
+    caps_switch {
+        capled: capled {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&kp CAPS &led 0 3000>;
+        }; 
+
+    };
+
     // 切换到不同编辑模式层
     switch_layer {
         // 如果有自定义行为，就需要把 &none 更换成真实的 behavior，例如 <&to 0 &kp A>，下面其实类似
         write_todefault: to_default_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&to 0 &none>;
+            bindings = <&to 0 &led 0 2000 &led 1 2000>;
         }; 
 
          // 短按空按键 ，长按切换到默认 layer 0
         th_todef: switch_to_default_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            tapping-term-ms = <2000>;      // 短按判定时间，可调
             flavor = "balanced";          // 推荐 balanced，更自然
             // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
             bindings = <&write_todefault>,<&none>;
@@ -27,14 +37,14 @@
         write_tovim: to_vim_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&to 2 &none>;
+            bindings = <&to 2 &led 0 2000>;
         }; 
 
          // 短按空按键 ，长按切换到 vim 编辑层 layer 1
         th_tovim: switch_to_vim_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            tapping-term-ms = <2000>;      // 短按判定时间，可调
             flavor = "balanced";          // 推荐 balanced，更自然
             // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
             bindings = <&write_tovim>,<&none>;
@@ -43,14 +53,14 @@
         write_towrt: to_write_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&to 3 &none>;
+            bindings = <&to 3 &led 1 2000>;
         }; 
 
          // 短按空按键 ，长按切换到写作模式层 layer 2
         th_towrt: switch_to_write_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            tapping-term-ms = <2000>;      // 短按判定时间，可调
             flavor = "balanced";          // 推荐 balanced，更自然
             // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
             bindings = <&write_towrt>,<&none>;
@@ -65,7 +75,7 @@
         device_clear: clear_current_bluetooth {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&bt BT_CLR &none>;
+            bindings = <&bt BT_CLR &blink 1 5>;
         };
 
         // 切换到槽位 0 的蓝牙连接
@@ -73,21 +83,21 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             // 这里先断开所有蓝牙连接，再选择相应的蓝牙槽，下面操作一样   
-            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 0 &none>;
+            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 0 &blink 0 5>;
         };
 
         // 切换到槽位 1 的蓝牙连接
         device_two: to_bluetooth_two_connect {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 1 &none>;
+            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 1 &blink 0 5>;
         };
 
         //切换到槽位 2 的蓝牙连接 
         device_three: to_bluetooth_three_connect {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 2 &none>;
+            bindings = <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_SEL 2 &blink 0 5>;
         };   
          // 短按空按键 ，长按清除当前槽位的蓝牙连接匹配
         th_clear: clear_bluetooth_bond {
@@ -103,7 +113,7 @@
         th_btone: to_bluetooth_bond_one {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            tapping-term-ms = <2000>;      // 短按判定时间，可调
             flavor = "balanced";          // 推荐 balanced，更自然
             // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
             bindings = <&device_one>,<&none>;
@@ -113,7 +123,7 @@
         th_bttwo: to_bluetooth_bond_two {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            tapping-term-ms = <2000>;      // 短按判定时间，可调
             flavor = "balanced";          // 推荐 balanced，更自然
             // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
             bindings = <&device_two>,<&none>;
@@ -123,7 +133,7 @@
         th_btthree: to_bluetooth_bond_three {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <3000>;      // 短按判定时间，可调
+            tapping-term-ms = <2000>;      // 短按判定时间，可调
             flavor = "balanced";          // 推荐 balanced，更自然
             // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
             bindings = <&device_three>,<&none>;

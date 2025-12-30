@@ -1,0 +1,11 @@
+config BATTERY_ALERT
+    bool "Enable Battery Low Alert"
+    default y
+
+config BATTERY_LEVEL
+    int "Battery Alert Threshold (%)"
+    default 5
+    range 0 100
+    depends on BATTERY_ALERT
+
+

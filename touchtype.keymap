@@ -26,14 +26,14 @@
                 //——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//—————————————//————————————— */  
     /*ROW_1*/   &kp GRAVE       &kp N1          &kp N2          &kp N3          &kp N4          &kp N5          &kp N6          &kp N7         &kp N8
     /*ROW_2*/   &kp TAB         &kp Q           &kp W           &kp E           &kp R           &kp T           &kp Y           &kp U          &kp I
-    /*ROW_3*/   &kp CAPS        &kp A           &kp S           &kp D           &kp F           &kp G           &kp H           &kp J          &kp K
+    /*ROW_3*/   &capled         &kp A           &kp S           &kp D           &kp F           &kp G           &kp H           &kp J          &kp K
     /*ROW_4*/   &kp LSHIFT      &kp Z           &kp X           &kp C           &kp V           &kp B           &kp N           &kp M          &kp COMMA
     /*ROW_5*/   &kp LCTRL       &kp LMETA       &kp LALT        &kp SPACE       &kp ENTER       &kp BACKSPACE   &kp RALT        &mo FN_LAYER   &kp K_APP
     /*ROW_6*/   &kp N9          &kp N0          &kp MINUS       &kp EQUAL       &kp HOME        &kp F1          &kp F6          &kp ESC        &kp F11
     /*ROW_7*/   &kp O           &kp P           &kp LBKT        &kp RBKT        &kp PAGE_UP     &kp F2          &kp F7          &kp BACKSPACE  &kp F12
     /*ROW_8*/   &kp L           &kp SEMICOLON   &kp APOSTROPHE  &kp BACKSLASH   &kp PAGE_DOWN   &kp F3          &kp F8          &kp INSERT     &none
     /*ROW_9*/   &kp DOT         &kp SLASH       &kp RSHIFT      &kp ENTER       &kp END         &kp F4          &kp F9          &kp DELETE     &none
-    /*ROW_10*/  &kp RCTRL       &kp LEFT_ARROW  &kp UP_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW &kp F5          &kp F10         &led 0 3000    &led 1 2000
+    /*ROW_10*/  &kp RCTRL       &kp LEFT_ARROW  &kp UP_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW &kp F5          &kp F10         &blink 0 5     &blink 1 5
             >;
         };
 

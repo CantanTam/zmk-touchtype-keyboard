@@ -94,10 +94,20 @@
         status = "okay";
     };
 
+    // 这里是CAPS_LOCK 和 切换层使用的 led 行为
     led: led {
         compatible = "zmk,behavior-led";
         #binding-cells = <2>; 
         // 索引 0 对应 GRE (P0.30), 索引 1 对应 RED (P0.31)
+        gpios = <&gpio0 30 GPIO_ACTIVE_LOW>, <&gpio0 31 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
+    // 这里是切换不同蓝牙设备使用的 led 行为
+    blink: blink {
+        compatible = "zmk,behavior-blink";
+        #binding-cells = <2>; 
+        // 引用相同的硬件资源
         gpios = <&gpio0 30 GPIO_ACTIVE_LOW>, <&gpio0 31 GPIO_ACTIVE_LOW>;
         status = "okay";
     };
