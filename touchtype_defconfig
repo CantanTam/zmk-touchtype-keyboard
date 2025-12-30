@@ -1,3 +1,36 @@
+###### 以下是用户可以自定义的固件选项 #####
+
+# 键盘默认名称
+CONFIG_ZMK_KEYBOARD_NAME="TypeLayer"
+
+# 进入空闲模式的等待时间阀值，单位是毫秒，默认是 30000 毫秒，也就是 30 秒
+CONFIG_ZMK_IDLE_TIMEOUT=30000
+
+# 启用深度睡眠功能之后，第一次点击按键是唤醒键盘，第二次点击键盘才是点击按键，启用此功能可以大幅度延长键盘待机时长
+CONFIG_ZMK_SLEEP=y
+
+# 进入睡眠模式的等待时间阀值，单位是毫秒，默认是 900000 毫秒，也就是 15 分钟
+CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=60000
+
+# 电池低于某个阀值的时候，红色 led 会闪烁提示，建议启用
+CONFIG_BATTERY_ALERT=y
+
+# 电池容量警告提示的电池容量百分比阀值，默认值 5，也就是电池电量低于 5% 的时候会亮红灯闪烁警告
+CONFIG_BATTERY_LEVEL=5
+
+# 启用层记录功能。关闭的话每次唤醒之后会回到默认层；启用后可以回到上一次切换的层
+# 需要注意的是，层记录功能会刷写芯片 flash，会影响到芯片寿命
+# 但是只要你不频繁切换层的话，其实这个影响很小，正常使用基本可以保证芯片至少八年寿命，所以建议开启
+CONFIG_RECORD_LAYER=n
+
+
+
+
+
+
+
+###### 除非你很熟悉 zmk，否则以下选项不要碰 #####
+
 CONFIG_BOARD_TOUCHTYPE=y
 CONFIG_SOC_SERIES_NRF52X=y
 CONFIG_SOC_NRF52832_QFAA=y
@@ -21,9 +54,7 @@ CONFIG_ZMK_BLE=y
 # 硬件设定为外围设备，键盘对于主机是外围设置，这是必选项
 CONFIG_BT_PERIPHERAL=y
 
-# 设备名称
-#CONFIG_BT_DEVICE_NAME="TouchCon"
-CONFIG_ZMK_KEYBOARD_NAME="TypeBatt"
+
 
 # 与主机连接后，及时向主机发送 zmk 的状态信息，可以简单理解为更快显示电池电量
 CONFIG_BT_GATT_ENFORCE_SUBSCRIPTION=n
@@ -62,26 +93,11 @@ CONFIG_ZMK_BATTERY_REPORTING=y
 # 设置电量报告间隔为 120 秒 (2 分钟)
 CONFIG_ZMK_BATTERY_REPORT_INTERVAL=120
 
-# 电池低于某个阀值的时候，红色 led 会闪烁提示
-CONFIG_BATTERY_ALERT=y
-
-# 电池容量警告提示的电池容量阀值，推荐使 5
-CONFIG_BATTERY_LEVEL=5
-
 # 进入深度睡眠模式之后，关闭I2C、SPI、UART等接口用于省电
 # 如果后续的XW12A芯片无法正常工作，可以尝试停用该功能
 CONFIG_PM_DEVICE=y
 
-# 进入空间模式的等待时间阀值，这里是 30 秒。深度睡眠
-CONFIG_ZMK_IDLE_TIMEOUT=30000
 
-# 启用深度睡眠功能
-CONFIG_ZMK_SLEEP=y
-
-# 进入深度睡眠模式的等待时间阀值，这里是 15分钟。注意，睡眠模式唤醒之后，会回到默认 layer 0，
-# 如果你不需要经常切换 layer ，可以直接使用默认值 900000，也就是 15 分钟；
-# 如果经常需要切换 layer ，可以把值调大一点，例如 3600000 ，也就是一小时，唤醒之后再切换 layer
-CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=60000
 
 
 
@@ -95,7 +111,6 @@ CONFIG_SETTINGS_NVS=y
 CONFIG_FLASH=y
 CONFIG_FLASH_PAGE_LAYOUT=y
 CONFIG_FLASH_MAP=y
-
 
 
 
@@ -128,3 +143,9 @@ CONFIG_FLASH_MAP=y
 # --- NRF52 stabilizer ---
 #CONFIG_BT_CTLR_SDC_FIX=y
 #CONFIG_BT_LL_SW_SPLIT=y
+
+
+
+# 启用 Zephyr 核心设置和 Flash 驱动
+CONFIG_SETTINGS=y
+

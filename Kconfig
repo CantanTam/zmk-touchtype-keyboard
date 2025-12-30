@@ -8,4 +8,7 @@ config BATTERY_LEVEL
     range 0 100
     depends on BATTERY_ALERT
 
-
+config RECORD_LAYER
+    bool "Record last used layer to flash"
+    default y
+    depends on SETTINGS

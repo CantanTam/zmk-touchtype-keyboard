@@ -21,7 +21,7 @@
         write_todefault: to_default_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&to 0 &led 0 2000 &led 1 2000>;
+            bindings = <&to 0 &led 0 2000 &led 1 2000 &reclayer 0>;
         }; 
 
          // 短按空按键 ，长按切换到默认 layer 0
@@ -37,7 +37,7 @@
         write_tovim: to_vim_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&to 2 &led 0 2000>;
+            bindings = <&to 2 &led 0 2000 &reclayer 2>;
         }; 
 
          // 短按空按键 ，长按切换到 vim 编辑层 layer 1
@@ -53,7 +53,7 @@
         write_towrt: to_write_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;   
-            bindings = <&to 3 &led 1 2000>;
+            bindings = <&to 3 &led 1 2000 &reclayer 3>;
         }; 
 
          // 短按空按键 ，长按切换到写作模式层 layer 2
