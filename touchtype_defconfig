@@ -149,3 +149,8 @@ CONFIG_FLASH_MAP=y
 # 启用 Zephyr 核心设置和 Flash 驱动
 CONFIG_SETTINGS=y
 
+
+# XW12A 触摸芯片相关驱动
+CONFIG_I2C=y
+CONFIG_XW12A=y
+

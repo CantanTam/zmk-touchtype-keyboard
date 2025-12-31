@@ -165,10 +165,11 @@
     pinctrl-names = "default", "sleep";
     clock-frequency = <I2C_BITRATE_FAST>;
 
-    xw12a: xw12a@0x40 {
-        compatible = "xinwang,xw12a";
-        reg = <0x40>;
-        inter-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
+    xw12a: xw12a@40 {
+		compatible = "xinwang,xw12a";
+		reg = <0x40>;
+
+		int-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
     };
 
 
