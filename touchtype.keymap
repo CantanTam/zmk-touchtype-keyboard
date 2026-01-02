@@ -31,9 +31,9 @@
     /*ROW_5*/   &kp LCTRL       &kp LMETA       &kp LALT        &kp SPACE       &kp ENTER       &kp BACKSPACE   &kp RALT        &mo FN_LAYER   &kp K_APP
     /*ROW_6*/   &kp N9          &kp N0          &kp MINUS       &kp EQUAL       &kp HOME        &kp F1          &kp F6          &kp ESC        &kp F11
     /*ROW_7*/   &kp O           &kp P           &kp LBKT        &kp RBKT        &kp PAGE_UP     &kp F2          &kp F7          &kp BACKSPACE  &kp F12
-    /*ROW_8*/   &kp L           &kp SEMICOLON   &kp APOSTROPHE  &kp BACKSLASH   &kp PAGE_DOWN   &kp F3          &kp F8          &kp INSERT     &none
-    /*ROW_9*/   &kp DOT         &kp SLASH       &kp RSHIFT      &kp ENTER       &kp END         &kp F4          &kp F9          &kp DELETE     &none
-    /*ROW_10*/  &kp RCTRL       &kp LEFT_ARROW  &kp UP_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW &kp F5          &kp F10         &blink 0 5     &blink 1 5
+    /*ROW_8*/   &kp L           &kp SEMICOLON   &kp APOSTROPHE  &kp BACKSLASH   &kp PAGE_DOWN   &kp F3          &kp F8          &kp INSERT     &kp C_AC_ZOOM_IN
+    /*ROW_9*/   &kp DOT         &kp SLASH       &kp RSHIFT      &kp ENTER       &kp END         &kp F4          &kp F9          &kp DELETE     &kp C_PP
+    /*ROW_10*/  &kp RCTRL       &kp LEFT_ARROW  &kp UP_ARROW    &kp DOWN_ARROW  &kp RIGHT_ARROW &kp F5          &kp F10         &none          &kp C_AC_ZOOM_OUT
             >;
         };
 
@@ -43,7 +43,7 @@
     /*          // COL_1        // COL_2        // COL_3        // COL_4        // COL_5        // COL_6        // COL_7        // COL_8       // COL_9  
                 //——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//——————————————//—————————————//————————————— */  
     /*ROW_1*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &trans         &trans
-    /*ROW_2*/   &trans          &trans          &trans          &trans          &comment_r      &trans          &trans          &trans         &trans
+    /*ROW_2*/   &trans          &trans          &trans          &trans          &comment_r      &th_touch 0 0   &trans          &trans         &trans
     /*ROW_3*/   &trans          &trans          &comment_s      &trans          &trans          &trans          &comment_h      &trans         &trans
     /*ROW_4*/   &trans          &trans          &comment_x      &comment_c      &trans          &trans          &trans          &trans         &trans
     /*ROW_5*/   &trans          &trans          &trans          &trans          &trans          &trans          &trans          &mo FN_LAYER   &trans

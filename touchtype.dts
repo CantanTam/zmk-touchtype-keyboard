@@ -118,6 +118,12 @@
         #binding-cells = <1>;
     };
 
+    togtouch: togtouch {
+        compatible = "zmk,behavior-togtouch";
+        #binding-cells = <0>;
+        status = "okay";
+    };
+
 
 };
 
@@ -168,7 +174,6 @@
     xw12a: xw12a@40 {
 		compatible = "xinwang,xw12a";
 		reg = <0x40>;
-
 		int-gpios = <&gpio0 27 GPIO_ACTIVE_LOW>;
     };
 

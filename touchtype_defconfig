@@ -10,13 +10,13 @@ CONFIG_ZMK_IDLE_TIMEOUT=30000
 CONFIG_ZMK_SLEEP=y
 
 # 进入睡眠模式的等待时间阀值，单位是毫秒，默认是 900000 毫秒，也就是 15 分钟
-CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=60000
+CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=600000
 
 # 电池低于某个阀值的时候，红色 led 会闪烁提示，建议启用
 CONFIG_BATTERY_ALERT=y
 
 # 电池容量警告提示的电池容量百分比阀值，默认值 5，也就是电池电量低于 5% 的时候会亮红灯闪烁警告
-CONFIG_BATTERY_LEVEL=5
+CONFIG_BATTERY_LEVEL=70
 
 # 启用层记录功能。关闭的话每次唤醒之后会回到默认层；启用后可以回到上一次切换的层
 # 需要注意的是，层记录功能会刷写芯片 flash，会影响到芯片寿命

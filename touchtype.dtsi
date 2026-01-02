@@ -15,6 +15,23 @@
 
     };
 
+    toggle_touch {
+        touch: reverse_touchtype_funtion {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;   
+            bindings = <&togtouch>;
+        }; 
+
+        th_touch: toggle_touchtype {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <4000>;      // 短按判定时间，可调
+            flavor = "balanced";          // 推荐 balanced，更自然
+            // 长按在前，短按在后；同时适用于 windows 和 linux 输入法
+            bindings = <&touch>,<&none>;        
+        };
+    };
+
     // 切换到不同编辑模式层
     switch_layer {
         // 如果有自定义行为，就需要把 &none 更换成真实的 behavior，例如 <&to 0 &kp A>，下面其实类似
